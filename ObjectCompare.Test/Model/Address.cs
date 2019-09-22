@@ -1,4 +1,4 @@
-namespace ObjectCompare.Test
+namespace ObjectCompare.Test.Model
 {
     public class Address
     {

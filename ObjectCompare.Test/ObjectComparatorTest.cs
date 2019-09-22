@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
+using ObjectCompare.Test.Model;
 
 namespace ObjectCompare.Test
 {
@@ -114,6 +115,46 @@ namespace ObjectCompare.Test
             };
             
             Assert.False(Comparator.Matches(firstPerson, secondPerson));
+        }
+
+        [Test]
+        public void Matches_WithEqualEnums_Match()
+        {
+            var firstPhone = new Phone
+            {
+                PhoneType = PhoneType.Mobile,
+                Extension = "1324",
+                Number = "8001112222"
+            };
+            
+            var secondPhone = new Phone
+            {
+                PhoneType = PhoneType.Mobile,
+                Extension = "1324",
+                Number = "8001112222"
+            };
+            
+            Assert.True(Comparator.Matches(firstPhone, secondPhone));
+        }
+
+        [Test]
+        public void Matches_WithDifferentEnums_DoNotMatch()
+        {
+            var firstPhone = new Phone
+            {
+                PhoneType = PhoneType.Work,
+                Extension = "1324",
+                Number = "8001112222"
+            };
+            
+            var secondPhone = new Phone
+            {
+                PhoneType = PhoneType.Mobile,
+                Extension = "1324",
+                Number = "8001112222"
+            };
+            
+            Assert.False(Comparator.Matches(firstPhone, secondPhone));
         }
     }
 }

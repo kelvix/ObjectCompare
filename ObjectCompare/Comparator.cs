@@ -55,20 +55,7 @@ namespace ObjectCompare
             // match we can immediately return false
             foreach (var property in a.GetType().GetProperties())
             {
-                var aValue = property.GetValue(a);
-                var bValue = property.GetValue(b);
-
-                if (aValue == null && bValue == null)
-                {
-                    continue;
-                }
-
-                if (aValue == null || bValue == null)
-                {
-                    return false;
-                }
-
-                if (!Matches(aValue, bValue))
+                if (!Matches(property.GetValue(a), property.GetValue(b)))
                 {
                     return false;
                 }
@@ -101,7 +88,8 @@ namespace ObjectCompare
         /// <param name="collectionA"></param>
         /// <param name="collectionB"></param>
         /// <returns></returns>
-        public static bool ListMatches(IEnumerable collectionA, IEnumerable collectionB)
+        public static bool ListMatches(IEnumerable collectionA,
+            IEnumerable collectionB)
         {
             var enumeratorA = collectionA.GetEnumerator();
             var enumeratorB = collectionB.GetEnumerator();
@@ -110,7 +98,7 @@ namespace ObjectCompare
             {
                 var aHasValue = enumeratorA.MoveNext();
                 var bHasValue = enumeratorB.MoveNext();
-                
+
                 // if no more items exist in either chain we can assume that the
                 // third if statement has not given us cause to return false.
                 // we can also assume that all items till this point have matched
